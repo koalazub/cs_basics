@@ -1,36 +1,55 @@
 package linkedlist
 
 import (
-	"fmt"
-
 	"golang.org/x/exp/slog"
 )
 
 type Node struct {
-	data int
 	next *Node
+	data int
 }
 
 type List struct {
 	head *Node
 }
 
-func (l *List) add(value int) {
-	newNode := &Node{data: value}
+func SinglyLinkedList() {
+	list := &List{}
+	for i := 0; i < 5; i++ {
+		list.add(i)
+	}
+	printList("Adding: ", list)
 
-	// newNode is the head
+	list.remove(2)
+	printList("after removal:", list)
+
+}
+
+func printList(message string, l *List) {
+	curr := l.head
+	for curr != nil {
+		slog.Info(message, curr.data)
+		curr = curr.next
+	}
+	slog.Info("done!")
+}
+
+// we create, and append a new value to the node at the end of the list
+func (l *List) add(value int) {
+	// new node is created and value is injected
+	node := &Node{data: value}
+
 	if l.head == nil {
-		l.head = newNode
+		l.head = node
 		return
 	}
 
-	// keep assigning current from next
 	curr := l.head
 	for curr.next != nil {
 		curr = curr.next
 	}
 
-	curr.next = newNode
+	curr.next = node
 }
 
 func (l *List) remove(value int) {
@@ -44,40 +63,13 @@ func (l *List) remove(value int) {
 	}
 
 	curr := l.head
-	for curr.next != nil && curr.next.data != value {
+	for curr.next != nil && curr.data != value {
 		curr = curr.next
 	}
 
-	// we're trying to set it to nil
 	if curr.next != nil {
 		curr.next = curr.next.next
-	}
-}
-
-func SinglyLinkedList() {
-	list := &List{}
-	for i := 0; i < 4; i++ {
-		list.add(i)
+		return
 	}
 
-	fmt.Println("Initial")
-	printList(list)
-
-	list.remove(2)
-	fmt.Println("removed")
-	printList(list)
-
-	list.remove(4)
-	fmt.Println("after removing 4")
-	printList(list)
-}
-
-func printList(l *List) {
-	curr := l.head
-
-	for curr != nil {
-		slog.Info("curr.next: ", curr)
-		curr = curr.next
-	}
-	slog.Info("done iterating")
 }
