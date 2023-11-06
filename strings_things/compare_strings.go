@@ -1,4 +1,4 @@
-package comparestrings
+package stringsthings
 
 func CompareStrings(strs []string) string {
 

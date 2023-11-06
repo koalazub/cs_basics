@@ -7,8 +7,8 @@ import (
 	"unicode"
 
 	b "github.com/cs-basics/binary_search"
-	s "github.com/cs-basics/compare_strings"
 	l "github.com/cs-basics/linked_list"
+	s "github.com/cs-basics/strings_things"
 	"golang.org/x/exp/slog"
 )
 
@@ -16,7 +16,11 @@ func main() {
 	menu()
 }
 
-var menuItems = []string{"a: binary search", "b: singly linked list", "c: compare strings"}
+var menuItems = []string{"a: binary search",
+	"b: singly linked list",
+	"c: compare strings",
+	"d: insertion sort",
+}
 
 func menu() {
 	reader := bufio.NewReader(os.Stdin)
@@ -42,5 +46,11 @@ func menu() {
 		prefixes := []string{"potato", "pot", "pointing"}
 		lcp := s.CompareStrings(prefixes)
 		slog.Info("lowest common prefix is:\n ", lcp, 0)
+	}
+
+	if char == 'D' {
+		un := []int{3, 7, 4, 1, 5, 8, 2, 9}
+		res := InsertionSort(un)
+		slog.Info("Target has been sorted", res)
 	}
 }
